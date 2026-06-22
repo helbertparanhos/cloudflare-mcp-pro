@@ -1,0 +1,60 @@
+{
+  "name": "cloudflare-mcp-pro",
+  "version": "1.1.0",
+  "mcpName": "io.github.helbertparanhos/cloudflare-mcp-pro",
+  "description": "MCP server for the Cloudflare REST API v4 — 69 tools across DNS, Zones, Workers, KV, R2, D1, Pages, Queues, Tunnels, SSL, WAF, Email, Logpush and Workers AI in a single local stdio server authenticated by API token.",
+  "type": "module",
+  "bin": {
+    "cloudflare-mcp-pro": "dist/index.js"
+  },
+  "main": "dist/index.js",
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE",
+    ".env.example"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/helbertparanhos/cloudflare-mcp-pro.git"
+  },
+  "homepage": "https://github.com/helbertparanhos/cloudflare-mcp-pro#readme",
+  "bugs": {
+    "url": "https://github.com/helbertparanhos/cloudflare-mcp-pro/issues"
+  },
+  "scripts": {
+    "build": "tsc && node -e \"require('fs').chmodSync('dist/index.js', 0o755)\"",
+    "dev": "tsc --watch",
+    "start": "node dist/index.js",
+    "test": "node --import tsx --test test/*.test.ts",
+    "inspect": "npx @modelcontextprotocol/inspector dist/index.js",
+    "prepublishOnly": "npm run build && npm test"
+  },
+  "keywords": [
+    "cloudflare",
+    "mcp",
+    "model-context-protocol",
+    "dns",
+    "workers",
+    "kv",
+    "r2",
+    "d1",
+    "pages",
+    "waf",
+    "claude"
+  ],
+  "author": "Helbert Paranhos / Strat Academy",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "1.29.0",
+    "zod": "3.25.76"
+  },
+  "devDependencies": {
+    "@types/node": "22.19.21",
+    "tsx": "4.22.4",
+    "typescript": "5.9.3"
+  }
+}

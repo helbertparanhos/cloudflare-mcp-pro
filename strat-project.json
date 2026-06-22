@@ -1,0 +1,36 @@
+{
+  "name": "cloudflare-mcp-pro",
+  "title": "Cloudflare MCP Pro",
+  "type": "mcp-server",
+  "description": "MCP server that exposes the Cloudflare REST API v4 (DNS, Zones, Workers, KV, R2, D1, Pages, Cache, WAF, Analytics) in a single local stdio server authenticated by API token.",
+  "status": "stable",
+  "version": "1.1.0",
+  "visibility": "public",
+  "install": "npx -y cloudflare-mcp-pro",
+  "homepage": "https://www.npmjs.com/package/cloudflare-mcp-pro",
+  "language": "typescript",
+  "features": [
+    "69 tools across 18 Cloudflare product areas",
+    "DNS CRUD + DNSSEC + BIND export",
+    "Zones: management, settings (SSL/TLS/HTTPS), cache purge, GraphQL analytics",
+    "Workers: deploy, routes, secrets, cron triggers",
+    "KV, R2, D1 (SQL), Pages, Queues, Tunnels",
+    "Security: WAF rulesets, IP access rules, page rules, SSL packs, custom hostnames, Turnstile",
+    "Email Routing, Logpush jobs, Workers AI inference",
+    "Human-approval gate: mutating tools require confirm:true, else return a redacted preview",
+    "MCP annotations (readOnly/destructive hints) + auto-pagination (fetch_all)",
+    "Single API-token auth with shared retry and rate-limit handling"
+  ],
+  "depends_on": [],
+  "tags": ["cloudflare", "mcp", "dns", "workers", "kv", "r2", "d1", "pages", "waf", "ssl", "email", "queues", "turnstile", "workers-ai"],
+  "owner": "Helbert Paranhos / Strat Academy",
+  "updated": "2026-06-22",
+  "approval": {
+    "target": "public",
+    "status": "approved",
+    "requested_by": "strat-aibr",
+    "requested_at": "2026-06-18",
+    "approved_by": "helbertparanhos",
+    "decision_at": "2026-06-22"
+  }
+}

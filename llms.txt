@@ -1,0 +1,63 @@
+# Cloudflare MCP Pro
+
+> MCP server for the Cloudflare REST API v4 — 69 tools across DNS, Zones, Workers, KV, R2, D1, Pages, Queues, Tunnels, SSL, WAF, Email Routing, Logpush and Workers AI, in a single local stdio server authenticated by one API token.
+
+Cloudflare MCP Pro is an MCP server that lets you control Cloudflare via the Model Context Protocol from Claude Code, Cursor and Claude Desktop, using a single Cloudflare API token (no OAuth flow). Unlike the official Cloudflare MCP offering (13 separate remote, OAuth-based servers), this runs locally over stdio and consolidates the most-used operations into one server with consistent verb_object tool names — ideal for Claude Code, CI and scripted automation. Every mutating tool is gated by a server-side human-approval check (confirm: true).
+
+## Tools (69 total)
+
+- Account: verify_token, list_accounts
+- Zones & settings: list_zones, get_zone, create_zone, delete_zone, purge_cache, get_zone_analytics, get_zone_setting, update_zone_setting
+- DNS: list_dns_records, create_dns_record, update_dns_record, delete_dns_record, get_dnssec, edit_dnssec, export_dns_records
+- Workers: list_workers, get_worker, deploy_worker, delete_worker, list_worker_routes, create_worker_route, delete_worker_route, put_worker_secret, delete_worker_secret, update_worker_cron
+- KV: list_kv_namespaces, create_kv_namespace, kv_list_keys, kv_get, kv_put, kv_delete
+- R2: list_r2_buckets, create_r2_bucket, delete_r2_bucket
+- D1: list_d1_databases, create_d1_database, query_d1 (SQL with bound params)
+- Pages: list_pages_projects, get_pages_project
+- WAF & firewall: list_firewall_rulesets, get_ruleset
+- IP access rules: list_access_rules, create_access_rule, delete_access_rule
+- Page rules: list_page_rules, create_page_rule, delete_page_rule
+- SSL/TLS: list_certificate_packs, get_ssl_verification, order_certificate_pack
+- Custom hostnames (SSL for SaaS): list_custom_hostnames, create_custom_hostname, delete_custom_hostname
+- Email Routing: list_email_rules, create_email_rule, list_email_destinations
+- Queues: list_queues, create_queue, delete_queue
+- Tunnels: list_tunnels, get_tunnel
+- Turnstile: list_turnstile_widgets, create_turnstile_widget
+- Workers AI: list_ai_models, run_ai
+- Logpush: list_logpush_jobs, create_logpush_job
+
+## Quick install
+
+Add to claude_desktop_config.json or .mcp.json:
+```json
+{
+  "mcpServers": {
+    "cloudflare": {
+      "command": "npx",
+      "args": ["-y", "cloudflare-mcp-pro"],
+      "env": { "CLOUDFLARE_API_TOKEN": "your-token", "CLOUDFLARE_ACCOUNT_ID": "your-account-id" }
+    }
+  }
+}
+```
+
+## Environment variables
+
+- CLOUDFLARE_API_TOKEN (required): create at https://dash.cloudflare.com/profile/api-tokens
+- CLOUDFLARE_ACCOUNT_ID (optional): default account used when a tool needs an account and you don't pass account_id
+- CLOUDFLARE_API_BASE (optional): override the API base URL (defaults to https://api.cloudflare.com/client/v4)
+
+## Human-approval gate
+
+Every mutating tool (create_*, update_*, delete_*, deploy_*, put_*, edit_*, purge_cache, query_d1, run_ai, …) requires `confirm: true`. Without it, the tool returns a non-executing `confirmation_required` preview with secrets redacted, and does not act. Read-only tools (list_*, get_*, verify_token, export_dns_records, analytics) are never gated.
+
+## Known limitations
+
+- Token scopes gate what works: a tool returns the Cloudflare 403 (with a hint) if the token lacks the matching permission.
+- R2/D1/Queues/Workers AI must be enabled on the account before their tools return data.
+- query_d1 uses bound params; multi-statement scripts follow Cloudflare's own limits.
+
+## Links
+
+- GitHub: https://github.com/helbertparanhos/cloudflare-mcp-pro
+- npm: https://www.npmjs.com/package/cloudflare-mcp-pro

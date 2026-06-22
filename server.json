@@ -1,0 +1,40 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.helbertparanhos/cloudflare-mcp-pro",
+  "description": "Cloudflare MCP: DNS, Zones, Workers, KV, R2, D1, Pages, WAF, SSL, Email, AI via REST API v4",
+  "title": "Cloudflare MCP Pro",
+  "version": "1.1.0",
+  "repository": {
+    "url": "https://github.com/helbertparanhos/cloudflare-mcp-pro",
+    "source": "github"
+  },
+  "packages": [
+    {
+      "registryType": "npm",
+      "registryBaseUrl": "https://registry.npmjs.org",
+      "identifier": "cloudflare-mcp-pro",
+      "version": "1.1.0",
+      "transport": { "type": "stdio" },
+      "environmentVariables": [
+        {
+          "name": "CLOUDFLARE_API_TOKEN",
+          "description": "Cloudflare API token from dash.cloudflare.com/profile/api-tokens",
+          "isRequired": true,
+          "isSecret": true
+        },
+        {
+          "name": "CLOUDFLARE_ACCOUNT_ID",
+          "description": "Default account ID used when a tool needs an account and you don't pass account_id",
+          "isRequired": false,
+          "isSecret": false
+        },
+        {
+          "name": "CLOUDFLARE_API_BASE",
+          "description": "Override the API base URL (defaults to https://api.cloudflare.com/client/v4)",
+          "isRequired": false,
+          "isSecret": false
+        }
+      ]
+    }
+  ]
+}

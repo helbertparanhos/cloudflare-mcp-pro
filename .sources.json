@@ -1,0 +1,46 @@
+{
+  "version": "1.0.0",
+  "created_at": "2026-06-18T00:00:00Z",
+  "project_type": "mcp-typescript",
+  "internal": false,
+  "references": [
+    {
+      "url": "https://github.com/cloudflare/mcp-server-cloudflare",
+      "fetched_at": "2026-06-18T00:00:00Z",
+      "description": "Official Cloudflare MCP servers — 13 remote, OAuth-based, product-specific servers. Used to scope coverage and identify gaps.",
+      "tools_found": [
+        "documentation",
+        "workers-bindings",
+        "workers-builds",
+        "observability",
+        "container",
+        "browser-rendering",
+        "logpush",
+        "ai-gateway",
+        "audit-logs",
+        "dns-analytics",
+        "dex",
+        "casb",
+        "graphql"
+      ]
+    },
+    {
+      "url": "https://developers.cloudflare.com/api/",
+      "fetched_at": "2026-06-18T00:00:00Z",
+      "description": "Cloudflare REST API v4 reference — endpoint groups, auth (API token), envelope format and pagination.",
+      "tools_found": [
+        "zones",
+        "dns_records",
+        "purge_cache",
+        "workers/scripts",
+        "storage/kv",
+        "r2/buckets",
+        "d1/database",
+        "pages/projects",
+        "rulesets",
+        "accounts",
+        "graphql-analytics"
+      ]
+    }
+  ]
+}

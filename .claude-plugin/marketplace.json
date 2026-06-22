@@ -1,0 +1,39 @@
+{
+  "name": "cloudflare-mcp-pro",
+  "displayName": "Cloudflare MCP Pro",
+  "description": "MCP server for the Cloudflare REST API v4 — 69 tools across DNS, Zones, Workers, KV, R2, D1, Pages, Queues, Tunnels, SSL, WAF, Email Routing, Logpush and Workers AI, with a server-side human-approval gate on every mutation.",
+  "version": "1.1.0",
+  "author": "helbertparanhos",
+  "license": "MIT",
+  "category": "DevOps",
+  "tags": ["mcp", "cloudflare", "dns", "workers", "devops", "automation"],
+  "repository": "https://github.com/helbertparanhos/cloudflare-mcp-pro",
+  "npm": "cloudflare-mcp-pro",
+  "tools": 69,
+  "transport": "stdio",
+  "auth": "env",
+  "envVars": [
+    {
+      "name": "CLOUDFLARE_API_TOKEN",
+      "description": "Cloudflare API token (https://dash.cloudflare.com/profile/api-tokens).",
+      "required": true,
+      "sensitive": true
+    },
+    {
+      "name": "CLOUDFLARE_ACCOUNT_ID",
+      "description": "Default account ID used when a tool needs an account and you don't pass account_id.",
+      "required": false,
+      "sensitive": false
+    },
+    {
+      "name": "CLOUDFLARE_API_BASE",
+      "description": "Override the API base URL (defaults to https://api.cloudflare.com/client/v4).",
+      "required": false,
+      "sensitive": false
+    }
+  ],
+  "quickstart": {
+    "command": "npx",
+    "args": ["-y", "cloudflare-mcp-pro"]
+  }
+}
