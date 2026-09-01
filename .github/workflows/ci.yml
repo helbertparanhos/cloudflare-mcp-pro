@@ -22,7 +22,12 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          # 22 e nao 20 por causa do Windows: o script de teste usa glob
+          # (test/*.test.ts) e quem expande e o Node, nao o shell -- o cmd.exe
+          # entrega o padrao literal. Globs em --test so existem do Node 21 pra
+          # cima; no 20 o job passava no Ubuntu (bash expande) e morria no
+          # Windows.
+          node-version: 22
           cache: npm
       - run: npm ci
       - run: npm run build
@@ -34,7 +39,12 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          # 22 e nao 20 por causa do Windows: o script de teste usa glob
+          # (test/*.test.ts) e quem expande e o Node, nao o shell -- o cmd.exe
+          # entrega o padrao literal. Globs em --test so existem do Node 21 pra
+          # cima; no 20 o job passava no Ubuntu (bash expande) e morria no
+          # Windows.
+          node-version: 22
           cache: npm
       - run: npm ci
       # So runtime: e o que chega em quem instala o pacote.
@@ -48,7 +58,12 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          # 22 e nao 20 por causa do Windows: o script de teste usa glob
+          # (test/*.test.ts) e quem expande e o Node, nao o shell -- o cmd.exe
+          # entrega o padrao literal. Globs em --test so existem do Node 21 pra
+          # cima; no 20 o job passava no Ubuntu (bash expande) e morria no
+          # Windows.
+          node-version: 22
           cache: npm
       - run: npm ci
       - run: npm run build
