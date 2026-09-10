@@ -1,0 +1,81 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  # Sem filtro de base de proposito: PR novo nasce com check, seja qual for o alvo.
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    # A regra da casa e verde nos dois. Ja houve teste com caminho POSIX
+    # hardcoded que passava no Ubuntu e quebrava no Windows (claude-fixer).
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          # 22 e nao 20 por causa do Windows: o script de teste usa glob
+          # (test/*.test.ts) e quem expande e o Node, nao o shell -- o cmd.exe
+          # entrega o padrao literal. Globs em --test so existem do Node 21 pra
+          # cima; no 20 o job passava no Ubuntu (bash expande) e morria no
+          # Windows.
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - run: npm run test --if-present
+
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          # 22 e nao 20 por causa do Windows: o script de teste usa glob
+          # (test/*.test.ts) e quem expande e o Node, nao o shell -- o cmd.exe
+          # entrega o padrao literal. Globs em --test so existem do Node 21 pra
+          # cima; no 20 o job passava no Ubuntu (bash expande) e morria no
+          # Windows.
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      # So runtime: e o que chega em quem instala o pacote.
+      - run: npm audit --omit=dev --audit-level=high
+
+  pacote:
+    # O tarball ja saiu errado uma vez (.mcp.json fora do campo `files`).
+    # Publicar sem dist/ e o modo mais silencioso de quebrar um pacote.
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          # 22 e nao 20 por causa do Windows: o script de teste usa glob
+          # (test/*.test.ts) e quem expande e o Node, nao o shell -- o cmd.exe
+          # entrega o padrao literal. Globs em --test so existem do Node 21 pra
+          # cima; no 20 o job passava no Ubuntu (bash expande) e morria no
+          # Windows.
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - name: dist/ tem que estar no tarball
+        run: |
+          npm pack --dry-run --json > pack.json
+          node -e "
+            const files = require('./pack.json')[0].files.map(f => f.path);
+            if (!files.some(p => p.startsWith('dist/'))) {
+              console.error('dist/ ficou fora do tarball. Confira o campo files do package.json.');
+              console.error(files.join('\n'));
+              process.exit(1);
+            }
+            console.log(files.length + ' arquivos no tarball, dist/ presente.');
+          "
